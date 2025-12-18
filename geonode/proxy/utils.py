@@ -18,7 +18,7 @@ class ProxyUrlsRegistry:
         from geonode.base.models import Link
         from geonode.geoserver.helpers import ogc_server_settings
 
-        self.proxy_allowed_hosts = set([site_url.hostname] + list(getattr(settings, "PROXY_ALLOWED_HOSTS", ())))
+        self.proxy_allowed_hosts = set(list(getattr(settings, "PROXY_ALLOWED_HOSTS", ())))
 
         if ogc_server_settings:
             self.register_host(ogc_server_settings.hostname)
