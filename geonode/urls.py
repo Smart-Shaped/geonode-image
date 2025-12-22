@@ -121,8 +121,8 @@ urlpatterns += [
     re_path(r"^api/o/v4/tokeninfo", verify_token, name="tokeninfo"),
     re_path(r"^api/o/v4/userinfo", user_info, name="userinfo"),
     # Api Views
-    re_path(r"^api/roles", roles, name="roles"),
-    re_path(r"^api/adminRole", admin_role, name="adminRole"),
+    # re_path(r"^api/roles", roles, name="roles"),
+    # re_path(r"^api/adminRole", admin_role, name="adminRole"),
     re_path(r"^api/users", users, name="users"),
     re_path(r"^api/v2/", include(router.urls)),
     re_path(r"^api/v2/", include("geonode.api.urls")),
