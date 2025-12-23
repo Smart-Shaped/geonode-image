@@ -120,37 +120,37 @@ def view_decorator(fdec, subclass=False):
     return decorator
 
 
-# def view_or_apiauth(view, request, test_func, *args, **kwargs):
-#    """
-#    This is a helper function used by both 'logged_in_or_basicauth' and
-#    'has_perm_or_basicauth' that does the nitty of determining if they
-#    are already logged in or if they have provided proper http-authorization
-#    and returning the view if all goes well, otherwise responding with a 401.
-#    """
-#    if test_func(auth.get_user(request)) or not settings.OAUTH2_API_KEY:
-#        # Already logged in, just return the view.
-#        #
-#        return view(request, *args, **kwargs)
-#
-#    # They are not logged in. See if they provided login credentials
-#    #
-#    if "HTTP_AUTHORIZATION" in request.META:
-#        _auth = request.META["HTTP_AUTHORIZATION"].split()
-#        if len(_auth) == 2:
-#            # NOTE: We are only support basic authentication for now.
-#            #
-#            if _auth[0].lower() == "apikey":
-#                auth_api_key = _auth[1]
-#                if auth_api_key and auth_api_key == settings.OAUTH2_API_KEY:
-#                    return view(request, *args, **kwargs)
-#
-#    # Either they did not provide an authorization header or
-#    # something in the authorization attempt failed. Send a 401
-#    # back to them to ask them to authenticate.
-#    #
-#    response = HttpResponse()
-#    response.status_code = 401
-#    return response
+def view_or_apiauth(view, request, test_func, *args, **kwargs):
+    """
+    This is a helper function used by both 'logged_in_or_basicauth' and
+    'has_perm_or_basicauth' that does the nitty of determining if they
+    are already logged in or if they have provided proper http-authorization
+    and returning the view if all goes well, otherwise responding with a 401.
+    """
+    if test_func(auth.get_user(request)) or not settings.OAUTH2_API_KEY:
+        # Already logged in, just return the view.
+        #
+        return view(request, *args, **kwargs)
+
+    # They are not logged in. See if they provided login credentials
+    #
+    if "HTTP_AUTHORIZATION" in request.META:
+        _auth = request.META["HTTP_AUTHORIZATION"].split()
+        if len(_auth) == 2:
+            # NOTE: We are only support basic authentication for now.
+            #
+            if _auth[0].lower() == "apikey":
+                auth_api_key = _auth[1]
+                if auth_api_key and auth_api_key == settings.OAUTH2_API_KEY:
+                    return view(request, *args, **kwargs)
+
+    # Either they did not provide an authorization header or
+    # something in the authorization attempt failed. Send a 401
+    # back to them to ask them to authenticate.
+    #
+    response = HttpResponse()
+    response.status_code = 401
+    return response
 
 
 def has_perm_or_basicauth(perm, realm=""):
